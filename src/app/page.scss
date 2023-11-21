@@ -39,22 +39,53 @@
     0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     3px 4px 2px -3px rgba(255, 255, 255, 0.55) inset;
   backdrop-filter: blur(50px);
+  transition: 0.5s;
   &-button {
+    position: relative;
     border-radius: 100px;
     gap: 16px;
     justify-content: flex-start;
-    transition: 0.5s;
+    transition: .3s;
     span {
-      width: 25px;
-      height: 25px;
+      width: 26px;
+      height: 26px;
       flex-shrink: 0;
     }
-    &.active,
-    &:hover {
+    &.active, &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    span:last-child {
+      text-align: left;
+      width: 100%;
+      display: none;
+    }
+
+    span.number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 2px;
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      border-radius: 50%;
       background: rgba(255, 255, 255, 0.3);
     }
   }
+
+  &:hover {
+    width: 200px;
+
+    .nav-button {
+      span:last-child {
+        display: flex;
+      }
+    }
+  }
 }
+
 
 .nav-right,
 .nav-left {
