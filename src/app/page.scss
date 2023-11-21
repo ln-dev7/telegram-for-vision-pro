@@ -1,0 +1,102 @@
+*{
+  color: white;
+}
+
+.main {
+  background: url("./../../public/banner.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.main-container {
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.main-container-none {
+  display: none;
+  @media screen and (max-width: 1000px) {
+    display: flex;
+  }
+}
+
+.input {
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: var(--dark-shade-grey-60, rgba(101, 99, 92, 0.6));
+  box-shadow: 0px 1px 2px 0px rgba(52, 50, 50, 0.1) inset;
+  backdrop-filter: blur(50px);
+}
+
+.nav {
+  width: 75px;
+  overflow: hidden;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    3px 4px 2px -3px rgba(255, 255, 255, 0.55) inset;
+  backdrop-filter: blur(50px);
+  &-button {
+    border-radius: 100px;
+    gap: 16px;
+    justify-content: flex-start;
+    transition: 0.5s;
+    span {
+      width: 25px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+    &.active,
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+.nav-right,
+.nav-left {
+  overflow-y: scroll;
+  width: 390px;
+  height: 670px;
+  flex-shrink: 0;
+  border-radius: 34px;
+  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.25),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    3px 4px 2px -3px rgba(255, 255, 255, 0.55) inset;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(50px);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.box-container {
+  width: 780px;
+  height: 670px;
+overflow-y: scroll;
+  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.25),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    3px 4px 2px -3px rgba(255, 255, 255, 0.55) inset;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(50px);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.box-author {
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    2px 3px 3px -3px rgba(255, 255, 255, 0.6) inset;
+  backdrop-filter: blur(50px);
+}
