@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "@splidejs/react-splide/css";
 import "./page.scss";
 import gsap from "gsap";
@@ -78,6 +78,9 @@ const chats = [
 export default function Home() {
   const tl = gsap.timeline();
   const openChats = () => {
+    setTimeout(() => {
+      document.querySelector(".dog")?.classList.remove("hidden");
+    }, 500);
     document.querySelector(".button-settings")?.classList.remove("active");
     document.querySelector(".button-chats")?.classList.add("active");
     gsap.to(".box-left-chats", {
@@ -98,6 +101,7 @@ export default function Home() {
     });
   };
   const openSettins = () => {
+    document.querySelector(".dog")?.classList.add("hidden");
     document.querySelector(".button-settings")?.classList.add("active");
     document.querySelector(".button-chats")?.classList.remove("active");
     gsap.to(".box-left-chats", {
@@ -117,10 +121,64 @@ export default function Home() {
       ease: "power0.easeNone",
     });
   };
+
+  const mainRef = useRef(null);
+  const [openImg, setOpenImg] = useState(false);
+  const handleClickImage = () => {
+    if (openImg) {
+      setOpenImg(false);
+      gsap.to(mainRef.current, {
+        backgroundImage: `url("/banner.jpg")`,
+        duration: 0.5,
+      });
+      gsap.to(".main-container", {
+        scale: 1,
+        opacity: 1,
+        duration: 0.5,
+      });
+
+      gsap.to(".dog", {
+        x: "0",
+        scale: 1,
+        duration: 0.5,
+      });
+    } else {
+      setOpenImg(true);
+
+      gsap.to(mainRef.current, {
+        backgroundImage: `url("/banner-night.jpg")`,
+        duration: 0.5,
+      });
+      gsap.to(".main-container", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.5,
+      });
+      gsap.to(".dog", {
+        x: "-50px",
+        scale: 3,
+        duration: 0.5,
+      });
+    }
+  };
   return (
-    <main className="main relative min-h-screen w-full overflow-hidden">
+    <main
+      ref={mainRef}
+      className="main relative min-h-screen w-full overflow-hidden"
+      style={{
+        backgroundImage: `url("/banner.jpg")`,
+      }}
+    >
+      <Image
+        onClick={handleClickImage}
+        className="dog absolute left-[40%] top-[30%] w-[385px] h-[190px] object-cover rounded-2xl cursor-pointer z-50"
+        width={2400}
+        height={1600}
+        alt="image"
+        src="/image-1.jpg"
+      />
       <div className="main-container relative mx-auto min-h-screen gap-6 flex justify-center items-center">
-        <div className="relative z-50 w-fit">
+        <div className="relative z-40 w-fit">
           <div className="box-container flex z-30 w-full">
             <div className="box-left overflow-hidden flex w-96 shrink-0">
               <div className="box-left-chats w-96 h-full shrink-0 p-4">
@@ -296,10 +354,143 @@ export default function Home() {
                   />
                 </div>
 
-                <div className="w-full flex flex-col items-start">
-                  {chats.map((chat, index) => (
-                    <div key={index} className=""></div>
-                  ))}
+                <div className="w-full flex items-center gap-3">
+                  <Image
+                    className="shrink-0 w-16 h-16 flex items-center justify-center rounded-full"
+                    width={2400}
+                    height={1600}
+                    alt="image"
+                    src="/image-3.jpg"
+                  />
+                  <div className="w-full flex flex-col items-start gap-1">
+                    <h1 className="text-lg font-bold">Alicia Torreaux</h1>
+                    <p className="text-sm opacity-60">+888 1234 6789</p>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </div>
+                <div className="border-b-2 w-full my-4 border-white/10 mx-auto"></div>
+                <div className="w-full flex flex-col items-start gap-2">
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C6.72679 16 5.49591 15.7018 4.38669 15.1393L4.266 15.075L0.621091 15.9851C0.311269 16.0625 0.0262241 15.8369 0.00130987 15.5438L0.00114131 15.4624L0.0149329 15.3787L0.925 11.735L0.86169 11.6153C0.406602 10.7186 0.124331 9.74223 0.0327466 8.72826L0.00737596 8.34634L0 8C0 3.58172 3.58172 0 8 0ZM8.5 9H5.5L5.41012 9.00806C5.17688 9.05039 5 9.25454 5 9.5C5 9.74546 5.17688 9.94961 5.41012 9.99194L5.5 10H8.5L8.58988 9.99194C8.82312 9.94961 9 9.74546 9 9.5C9 9.25454 8.82312 9.05039 8.58988 9.00806L8.5 9ZM10.5 6H5.5L5.41012 6.00806C5.17688 6.05039 5 6.25454 5 6.5C5 6.74546 5.17688 6.94961 5.41012 6.99194L5.5 7H10.5L10.5899 6.99194C10.8231 6.94961 11 6.74546 11 6.5C11 6.25454 10.8231 6.05039 10.5899 6.00806L10.5 6Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Saved Messages</span>
+                  </button>
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C6.72679 16 5.49591 15.7018 4.38669 15.1393L4.266 15.075L0.621091 15.9851C0.311269 16.0625 0.0262241 15.8369 0.00130987 15.5438L0.00114131 15.4624L0.0149329 15.3787L0.925 11.735L0.86169 11.6153C0.406602 10.7186 0.124331 9.74223 0.0327466 8.72826L0.00737596 8.34634L0 8C0 3.58172 3.58172 0 8 0ZM8.5 9H5.5L5.41012 9.00806C5.17688 9.05039 5 9.25454 5 9.5C5 9.74546 5.17688 9.94961 5.41012 9.99194L5.5 10H8.5L8.58988 9.99194C8.82312 9.94961 9 9.74546 9 9.5C9 9.25454 8.82312 9.05039 8.58988 9.00806L8.5 9ZM10.5 6H5.5L5.41012 6.00806C5.17688 6.05039 5 6.25454 5 6.5C5 6.74546 5.17688 6.94961 5.41012 6.99194L5.5 7H10.5L10.5899 6.99194C10.8231 6.94961 11 6.74546 11 6.5C11 6.25454 10.8231 6.05039 10.5899 6.00806L10.5 6Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Recent Calls</span>
+                  </button>
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C6.72679 16 5.49591 15.7018 4.38669 15.1393L4.266 15.075L0.621091 15.9851C0.311269 16.0625 0.0262241 15.8369 0.00130987 15.5438L0.00114131 15.4624L0.0149329 15.3787L0.925 11.735L0.86169 11.6153C0.406602 10.7186 0.124331 9.74223 0.0327466 8.72826L0.00737596 8.34634L0 8C0 3.58172 3.58172 0 8 0ZM8.5 9H5.5L5.41012 9.00806C5.17688 9.05039 5 9.25454 5 9.5C5 9.74546 5.17688 9.94961 5.41012 9.99194L5.5 10H8.5L8.58988 9.99194C8.82312 9.94961 9 9.74546 9 9.5C9 9.25454 8.82312 9.05039 8.58988 9.00806L8.5 9ZM10.5 6H5.5L5.41012 6.00806C5.17688 6.05039 5 6.25454 5 6.5C5 6.74546 5.17688 6.94961 5.41012 6.99194L5.5 7H10.5L10.5899 6.99194C10.8231 6.94961 11 6.74546 11 6.5C11 6.25454 10.8231 6.05039 10.5899 6.00806L10.5 6Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Chat Folders</span>
+                  </button>
+                </div>
+                <div className="border-b-2 w-full my-2 border-white/10 mx-auto"></div>
+                <div className="w-full flex flex-col items-start gap-2">
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.9979 2C13.1469 2 15.7418 4.33488 15.9824 7.3554L15.9958 7.57762L16.0003 7.80214L15.9993 11.398L16.9247 13.6202C16.9472 13.6743 16.9649 13.7302 16.9776 13.7871L16.9929 13.8733L17.0015 14.0046C17.0015 14.4526 16.705 14.8387 16.2524 14.9677L16.136 14.9945L16.0015 15.0046L12.4999 15.004L12.4949 15.1653C12.4098 16.469 11.3254 17.5 10.0003 17.5C8.67478 17.5 7.59022 16.4685 7.50558 15.1644L7.49986 15.004L3.99915 15.0046C3.9112 15.0046 3.82383 14.993 3.73927 14.9702L3.61481 14.9277C3.20403 14.7567 2.96206 14.3392 3.01246 13.8757L3.03354 13.7483L3.07596 13.6202L3.99926 11.401L4.00035 7.79281L4.00465 7.56824C4.12726 4.45115 6.77129 2 9.9979 2ZM11.4999 15.004H8.49986L8.50722 15.1454C8.57576 15.8581 9.143 16.425 9.8558 16.4931L10.0003 16.5C10.78 16.5 11.4207 15.9051 11.4934 15.1445L11.4999 15.004ZM9.9979 3C7.37535 3 5.22741 4.92372 5.0174 7.38498L5.00417 7.59723L5.00026 7.80214V11.5L4.96185 11.6922L3.99914 14.0046L15.9569 14.0066L16.0021 14.0045L15.0387 11.6922L15.0003 11.5L15.0004 7.81241L14.9963 7.60831C14.8911 5.0349 12.6949 3 9.9979 3Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Notifications</span>
+                  </button>
+                  <button className="w-full bg-white/10 flex items-center justify-start gap-2 py-3 px-4 rounded-xl">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 2C11.6569 2 13 3.34315 13 5V6H14C15.1046 6 16 6.89543 16 8V15C16 16.1046 15.1046 17 14 17H6C4.89543 17 4 16.1046 4 15V8C4 6.89543 4.89543 6 6 6H7V5C7 3.34315 8.34315 2 10 2ZM14 7H6C5.44772 7 5 7.44772 5 8V15C5 15.5523 5.44772 16 6 16H14C14.5523 16 15 15.5523 15 15V8C15 7.44772 14.5523 7 14 7ZM10 10.5C10.5523 10.5 11 10.9477 11 11.5C11 12.0523 10.5523 12.5 10 12.5C9.44772 12.5 9 12.0523 9 11.5C9 10.9477 9.44772 10.5 10 10.5ZM10 3C8.89543 3 8 3.89543 8 5V6H12V5C12 3.89543 11.1046 3 10 3Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Privacy and Security</span>
+                  </button>
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7.16667 3C7.43713 3 7.70151 3.0731 7.93238 3.21016L8.06667 3.3L9.667 4.5H15.5C16.7703 4.5 17.8192 5.44737 17.9789 6.67409L17.9947 6.83562L18 7V14.5C18 15.8255 16.9685 16.91 15.6644 16.9947L15.5 17H4.5C3.17452 17 2.08996 15.9685 2.00532 14.6644L2 14.5V5.5C2 4.17452 3.03154 3.08996 4.33562 3.00532L4.5 3H7.16667ZM8.15763 7.03449C7.90991 7.2946 7.57838 7.45592 7.22435 7.49219L7.07143 7.5L3 7.499V14.5C3 15.2797 3.59489 15.9204 4.35554 15.9931L4.5 16H15.5C16.2797 16 16.9204 15.4051 16.9931 14.6445L17 14.5V7C17 6.2203 16.4051 5.57955 15.6445 5.50687L15.5 5.5H9.617L8.15763 7.03449ZM7.16667 4H4.5C3.7203 4 3.07955 4.59489 3.00687 5.35554L3 5.5V6.499L7.07143 6.5C7.1809 6.5 7.28655 6.46411 7.37274 6.39902L7.4335 6.34483L8.694 5.021L7.46667 4.1C7.40176 4.05132 7.32632 4.01941 7.24701 4.0065L7.16667 4Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Data and Storage</span>
+                  </button>
+                  <button className="w-full flex items-center justify-start gap-2 py-3 px-4 rounded-xl hover:bg-white/10 duration-300">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.53828 2C4.94843 2 2.03828 4.91015 2.03828 8.5C2.03828 9.651 2.33787 10.7334 2.86353 11.6719L2.06779 13.7542C1.7745 14.5216 2.48048 15.2957 3.2716 15.0741L5.75898 14.3774C6.60219 14.7768 7.5448 15 8.53828 15C12.1281 15 15.0383 12.0899 15.0383 8.5C15.0383 4.91015 12.1281 2 8.53828 2ZM3.03828 8.5C3.03828 5.46243 5.50071 3 8.53828 3C11.5758 3 14.0383 5.46243 14.0383 8.5C14.0383 11.5376 11.5758 14 8.53828 14C7.63615 14 6.78612 13.7832 6.03606 13.3993L5.86185 13.3101L3.0019 14.1111L3.97101 11.5753L3.84272 11.3655C3.33247 10.5313 3.03828 9.55079 3.03828 8.5ZM11.5009 18C9.53124 18 7.76622 17.1239 6.57422 15.7402C7.13727 15.8926 7.7266 15.981 8.33392 15.9973C9.22932 16.629 10.3218 17 11.5009 17C12.403 17 13.253 16.7832 14.0031 16.3993L14.1773 16.3101L17.0373 17.1111L16.0681 14.5752L16.1964 14.3655C16.7067 13.5313 17.0009 12.5508 17.0009 11.5C17.0009 10.3455 16.6452 9.27414 16.0374 8.38943C16.0286 7.78165 15.9475 7.19137 15.8024 6.6268C17.1506 7.81779 18.0009 9.5596 18.0009 11.5C18.0009 12.651 17.7013 13.7333 17.1756 14.6719L17.9714 16.7542C18.2646 17.5216 17.5587 18.2957 16.7675 18.0741L14.2802 17.3774C13.437 17.7768 12.4943 18 11.5009 18Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Apparence</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -355,7 +546,7 @@ export default function Home() {
                         alt="image"
                         src="/image-2.jpg"
                       />
-                      <div className="w-[385px] rounded-full relative bg-black/20 py-2 pl-4 pr-20 text-justify">
+                      <div className="w-[385px] rounded-full relative bg-black/20 py-2 pl-4 pr-20 text-justify text-opacity-80 text-white">
                         Hello Everyone 👋🏾
                         <span className="absolute scale-[.8] right-1 bottom-1 flex items-center gap-2">
                           <span className="">
@@ -385,7 +576,7 @@ export default function Home() {
 
                     <div className="self-start flex items-end gap-2 ml-14">
                       <Image
-                        className="w-[385px] h-[190px] object-cover rounded-2xl cursor-pointer"
+                        className="w-[385px] h-[190px] object-cover rounded-2xl cursor-pointer z-50"
                         width={2400}
                         height={1600}
                         alt="image"
@@ -401,7 +592,7 @@ export default function Home() {
                         alt="image"
                         src="/avatar-4.jpg"
                       />
-                      <div className="w-[385px] rounded-2xl rounded-bl-none relative bg-black/20 py-4 pt-3 pl-4 pr-20 text-justify">
+                      <div className="w-[385px] rounded-2xl rounded-bl-none relative bg-black/20 py-4 pt-3 pl-4 pr-20 text-justify text-opacity-80 text-white">
                         J&apos;avais créé une application pour permettre aux
                         personnes de créer et postuler à des offres
                         d&apos;emplois.
@@ -509,8 +700,188 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <div className="box-right-settings w-full shrink-0 h-full p-4">
-                <div className="border-b-2 w-full my-4 border-white/10 mx-auto"></div>
+              <div className="box-right-settings w-full shrink-0 h-full p-4 gap-4 flex flex-col">
+                <div className="w-full flex items-center justify-between gap-4">
+                  <button className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 bg-white/10">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                      />
+                    </svg>
+                  </button>
+                  <div className="flex flex-col items-center gap-1 w-full">
+                    <h1 className="text-xl text-center font-bold pr-12">
+                      Privacy and Security
+                    </h1>
+                  </div>
+                </div>
+                <div className="w-full h-full flex flex-col items-center">
+                  <div className="rounded-2xl overflow-hidden w-96 bg-black/10">
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Blocked Users</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Passcode</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Two-Step Verification</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Auto-Delete Messages </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="text-xs opacity-50 px-6 py-3 w-96">
+                    Automatically delete messages for everyone after a period of
+                    time in all new chats you start.
+                  </p>
+                  <div className="w-96 px-4">
+                    <h2 className="mt-3 mb-3 text-left text-lg font-bold">Privacy</h2>
+                  </div>
+                  <div className="rounded-2xl overflow-hidden w-96 bg-black/10">
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Phone Number</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Last Seen & Online</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Profile Photos</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                    <div className="border-b-2 w-full my-0 border-white/10 mx-auto"></div>
+                    <button className="w-full flex items-center justify-between gap-2 px-4 py-3">
+                      <span className="text-sm">Voice Messages</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="text-xs opacity-50 px-6 py-3 w-96">
+                    Change who can see your Last Seen, Profile Photo and Status
+                  </p>
+                </div>
               </div>
             </div>
           </div>

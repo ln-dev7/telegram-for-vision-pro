@@ -3,7 +3,6 @@
 }
 
 .main {
-  background: url("./../../public/banner.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -147,4 +146,15 @@
     0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     2px 3px 3px -3px rgba(255, 255, 255, 0.6) inset;
   backdrop-filter: blur(50px);
+}
+
+
+.dog{
+  display: block;
+  &.hidden{
+    display: none;
+  }
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 }
