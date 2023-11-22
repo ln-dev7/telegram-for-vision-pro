@@ -1,4 +1,4 @@
-*{
+* {
   color: white;
 }
 
@@ -32,7 +32,7 @@
 .nav {
   width: 75px;
   overflow: hidden;
-  border-radius: 34px;
+  border-radius: 40px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05),
     0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
@@ -45,13 +45,14 @@
     border-radius: 100px;
     gap: 16px;
     justify-content: flex-start;
-    transition: .3s;
+    transition: 0.3s;
     span {
       width: 26px;
       height: 26px;
       flex-shrink: 0;
     }
-    &.active, &:hover {
+    &.active,
+    &:hover {
       background: rgba(255, 255, 255, 0.3);
     }
 
@@ -77,6 +78,7 @@
 
   &:hover {
     width: 200px;
+    //border-radius: 30px;
 
     .nav-button {
       span:last-child {
@@ -86,14 +88,9 @@
   }
 }
 
-
-.nav-right,
-.nav-left {
-  overflow-y: scroll;
-  width: 390px;
-  height: 670px;
-  flex-shrink: 0;
-  border-radius: 34px;
+.box-container {
+  width: 1200px;
+  height: 700px;
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.25),
     0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
@@ -101,25 +98,45 @@
   border-radius: 40px;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(50px);
-  &::-webkit-scrollbar {
-    display: none;
+  overflow: hidden;
+}
+
+.box-left {
+  &-chats,
+  &-settings {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(50px);
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
-.box-container {
-  width: 780px;
-  height: 670px;
-overflow-y: scroll;
-  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.25),
-    0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
-    0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset,
-    3px 4px 2px -3px rgba(255, 255, 255, 0.55) inset;
-  border-radius: 40px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(50px);
-  &::-webkit-scrollbar {
-    display: none;
+.box-right {
+  &-chats,
+  &-settings {
+    //height: 816px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
+}
+
+.cirle-button {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(50px);
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .box-author {
