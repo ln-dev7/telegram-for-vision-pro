@@ -9,14 +9,14 @@
 }
 
 .main-container {
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1300px) {
     display: none;
   }
 }
 
 .main-container-none {
   display: none;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1300px) {
     display: flex;
   }
 }
@@ -154,7 +154,7 @@
   &.hidden{
     display: none;
   }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1300px) {
     display: none;
   }
 }

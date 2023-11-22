@@ -169,14 +169,14 @@ export default function Home() {
         backgroundImage: `url("/banner.jpg")`,
       }}
     >
-      <Image
+      {/* <Image
         onClick={handleClickImage}
         className="dog absolute left-[40%] top-[30%] w-[385px] h-[190px] object-cover rounded-2xl cursor-pointer z-50"
         width={2400}
         height={1600}
         alt="image"
         src="/image-1.jpg"
-      />
+      /> */}
       <div className="main-container relative mx-auto min-h-screen gap-6 flex justify-center items-center">
         <div className="relative z-40 w-fit">
           <div className="box-container flex z-30 w-full">
@@ -254,7 +254,7 @@ export default function Home() {
                     <div
                       key={index}
                       className={`hover:bg-white/10 bg-transparent duration-300 rounded-2xl w-full p-3 cursor-pointer flex gap-3 ${
-                        chat?.active && "bg-slate-100/10"
+                        chat?.active && "bg-slate-100/20"
                       }`}
                     >
                       <div
